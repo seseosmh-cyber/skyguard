@@ -287,6 +287,20 @@ figure img{display:block;width:100%;height:auto;border:1px solid var(--line)}
 figcaption{font-size:13.5px;line-height:1.6;color:var(--faint);margin-top:8px}
 .split{display:grid;grid-template-columns:minmax(0,1fr) 150px;gap:16px;align-items:end}
 @media (max-width:520px){.split{grid-template-columns:1fr}}
+/* videos */
+.split.vid-split{grid-template-columns:1fr;align-items:start}
+.vid-box{position:relative;border:1px solid var(--line);background:#081020;cursor:pointer;overflow:hidden;-webkit-tap-highlight-color:transparent}
+.vid-box video{display:block;width:100%;height:auto;background:#081020}
+.vid-btn{position:absolute;top:8px;right:8px;z-index:2;width:38px;height:38px;padding:0;border-radius:50%;border:1px solid rgba(122,196,232,.38);background:rgba(4,11,23,.74);color:#E8F6FF;display:grid;place-items:center;cursor:pointer;-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px)}
+.vid-box.bl .vid-btn{top:auto;right:auto;bottom:8px;left:8px}
+.vid-btn:hover{border-color:var(--cyan);color:var(--cyan)}
+.vid-btn svg{width:15px;height:15px;fill:currentColor}
+.vid-btn .ic-play{display:none;margin-left:2px}
+.vid:not(.playing) .vid-btn .ic-play{display:block}
+.vid:not(.playing) .vid-btn .ic-pause{display:none}
+.vid-badge{position:absolute;left:50%;top:50%;width:60px;height:60px;margin:-30px 0 0 -30px;border-radius:50%;background:rgba(4,11,23,.7);border:1px solid rgba(53,224,240,.55);color:var(--cyan);display:grid;place-items:center;pointer-events:none;opacity:0;transition:opacity .25s}
+.vid-badge svg{width:24px;height:24px;fill:currentColor;margin-left:4px}
+.vid:not(.playing) .vid-badge{opacity:1;transition-delay:.6s}
 
 /* demo */
 .demo-btns{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
@@ -622,9 +636,9 @@ figcaption{font-size:13.5px;line-height:1.6;color:var(--faint);margin-top:8px}
         <li><span class="n">7</span><div><b data-t="p7t"></b><span class="d" data-t="p7p"></span></div></li>
         <li><span class="n">8</span><div><b data-t="p8t"></b><span class="d" data-t="p8p"></span></div></li>
       </ol>
-      <div class="split">
+      <div class="split vid-split">
         <p class="note" data-t="inAI"></p>
-        <figure><img src="img/platform.jpg" alt="" data-talt="imgAlt" width="960" height="940" loading="lazy"><figcaption data-t="figPlat"></figcaption></figure>
+        <figure class="vid"><div class="vid-box"><video src="media/motion.mp4" poster="media/motion.jpg" width="1280" height="720" muted loop playsinline webkit-playsinline preload="none" disablepictureinpicture data-ta="vidMotionA"></video><span class="vid-badge" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M7 4.5v15l13-7.5z"/></svg></span><button class="vid-btn" type="button"><svg class="ic-pause" viewBox="0 0 24 24" aria-hidden="true"><path d="M6.5 4.5h4v15h-4zM13.5 4.5h4v15h-4z"/></svg><svg class="ic-play" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 4.5v15l13-7.5z"/></svg></button></div><figcaption data-t="figPlat"></figcaption></figure>
       </div>
     </div>
   </section>
@@ -678,7 +692,7 @@ figcaption{font-size:13.5px;line-height:1.6;color:var(--faint);margin-top:8px}
         <div class="kpi"><span class="pre" data-t="k3pre"></span><div class="v"><b class="big" data-count="146">146</b></div><p data-t="k3p"></p></div>
         <div class="kpi"><span class="pre" data-t="k4pre"></span><div class="v"><b class="big" data-count="5000" data-comma>5,000</b><span class="u" data-t="sar"></span></div><p data-t="k4p"></p></div>
       </div>
-      <figure><img src="img/sim.jpg" alt="" data-talt="simAlt" width="1845" height="905" loading="lazy"><figcaption data-t="simCap"></figcaption></figure>
+      <figure class="vid"><div class="vid-box bl"><video src="media/sim.mp4" poster="media/sim.jpg" width="1280" height="718" muted loop playsinline webkit-playsinline preload="none" disablepictureinpicture data-ta="vidSimA"></video><span class="vid-badge" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M7 4.5v15l13-7.5z"/></svg></span><button class="vid-btn" type="button"><svg class="ic-pause" viewBox="0 0 24 24" aria-hidden="true"><path d="M6.5 4.5h4v15h-4zM13.5 4.5h4v15h-4z"/></svg><svg class="ic-play" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 4.5v15l13-7.5z"/></svg></button></div><figcaption data-t="simCap"></figcaption></figure>
       <div class="tbl">
         <table>
           <caption data-t="tblT"></caption>
@@ -826,7 +840,7 @@ p5t:"نقل الحركة بالسيور",p5p:"محركات Stepper مع سيور
 p6t:"حساسات الزاوية AS5048A",p6p:"حساس مغناطيسي على كل محور يقرأ الزاوية 1,000 مرة في الثانية.",
 p7t:"محرك الدوران الأفقي",p7p:"داخل القاعدة، مع المحمل والسير.",
 p8t:"صندوق التحكم",p8p:"متحكم ESP32-S3 يحرّك المحركات ويقرأ الحساسات ويشغّل الكاميرتين في اللحظة نفسها، مع زر إيقاف طوارئ.",
-inAI:"والذكاء الاصطناعي يعمل على لابتوب بمعالج رسومي (GPU) يعرض لوحة المتابعة.",figPlat:"صورة من التصميم ثلاثي الأبعاد للجهاز.",
+inAI:"والذكاء الاصطناعي يعمل على لابتوب بمعالج رسومي (GPU) يعرض لوحة المتابعة.",figPlat:"فيديو من التصميم ثلاثي الأبعاد: الجهاز يلف ويميل ويتابع، وبعدها يتفكك لقطعه ويرجع.",vidMotionA:"فيديو: تصميم جهاز SkyGuard ثلاثي الأبعاد وهو يتحرك",vidSimA:"فيديو من محاكاة التتبّع: الجهاز يقفل على الهدف ويتابعه",vidPlay:"تشغيل الفيديو",vidPause:"إيقاف الفيديو",
 demoEy:"جرّبه بنفسك",demoT:"أطلق هدفًا وشاهد كيف يقرّر",demoP:"محاكاة توضيحية تعمل في متصفحك. أطلق درونًا أو طيرًا، أو جرّب هجوم تزوير على قراءة الليدار.",
 bDrone:"أطلق درون",bBird:"أطلق طير",bSpoof:"زوّر قراءة الليدار",bReset:"إعادة",
 logT:"سجل الأحداث",logEmpty:"لا توجد أحداث بعد. أطلق درونًا لتبدأ.",noGL:"العرض التفاعلي يحتاج متصفحًا يدعم WebGL. باقي الصفحة يعمل كالمعتاد.",
@@ -840,7 +854,7 @@ k1pre:"تجربة محاكاة",k1p:"لم يفقد الجهاز الهدف في 
 k2pre:"خطأ التصويب أقل من",cm:"سم",k2p:"على بعد 50 م في المحاكاة ("+I+"0.4–0.7"+P+" ملي راديان)",
 k3pre:"اختبار آلي ناجح",k3p:"93 لبرنامج المتحكم و53 لبرنامج الحاسب",
 k4pre:"تكلفة القطع حوالي",sar:"ريال",k4p:"مقابل ملايين للأنظمة المتخصصة",
-simAlt:"لقطة من محاكاة التتبّع: الجهاز مقفل على الهدف",simCap:"لقطة من المحاكاة: الجهاز مقفل على الدرون ويتابعه أثناء مروره.",
+simAlt:"لقطة من محاكاة التتبّع: الجهاز مقفل على الهدف",simCap:"فيديو من المحاكاة: الجهاز يقفل على الدرون ويتابعه طول مروره، وخطأ التصويب يظل تحت الخط البرتقالي (هدفنا).",
 tblT:"الأهداف مقابل نتائج المحاكاة",thM:"المقياس",thG:"الهدف",thS:"المحاكاة",
 r1m:"التتبّع",r1g:"خطأ تصويب أقل من 2 ملي راديان",r1s:I+"0.4–0.7"+P+" ملي راديان",
 r2m:"المسافة بالليدار",r2g:"خطأ أقل من 5 سم حتى 10 م",r2s:I+"±2"+P+" سم حتى 7 م",
@@ -907,7 +921,7 @@ p5t:"Belt drive",p5p:"Stepper motors with GT2 belts and quiet TMC2209 drivers fo
 p6t:"AS5048A angle sensors",p6p:"A magnetic sensor on each axis reads the angle 1,000 times per second.",
 p7t:"Pan motor",p7p:"Inside the base, with the bearing and belt.",
 p8t:"Controller box",p8p:"An ESP32-S3 drives the motors, reads the sensors and triggers both cameras at the same instant, with an emergency stop.",
-inAI:"The AI runs on a laptop with a GPU that also shows the dashboard.",figPlat:"Render of the device's 3D design.",
+inAI:"The AI runs on a laptop with a GPU that also shows the dashboard.",figPlat:"Video of the 3D design: the device pans, tilts and tracks, then comes apart and goes back together.",vidMotionA:"Video: the SkyGuard 3D design in motion",vidSimA:"Tracking simulation video: the device locks on the target and follows it",vidPlay:"Play video",vidPause:"Pause video",
 demoEy:"Try it yourself",demoT:"Launch a target and watch it decide",demoP:"An illustrative simulation running in your browser. Launch a drone or a bird, or try a spoofing attack on the LiDAR reading.",
 bDrone:"Launch drone",bBird:"Launch bird",bSpoof:"Spoof the LiDAR",bReset:"Reset",
 logT:"Event log",logEmpty:"No events yet. Launch a drone to start.",noGL:"The live demo needs a browser with WebGL. The rest of the page works as usual.",
@@ -921,7 +935,7 @@ k1pre:"simulation runs",k1p:"the device never lost the target",
 k2pre:"aiming error under",cm:"cm",k2p:"at 50 m in simulation (0.4–0.7 mrad)",
 k3pre:"automated tests passed",k3p:"93 firmware and 53 PC software tests",
 k4pre:"parts cost, about",sar:"SAR",k4p:"versus millions for dedicated systems",
-simAlt:"Tracking simulation frame: the device is locked on the target",simCap:"Simulation frame: the device is locked on the drone and follows it as it passes.",
+simAlt:"Tracking simulation frame: the device is locked on the target",simCap:"Simulation video: the device locks on the drone and follows it all the way, and the aiming error stays under the orange line (our target).",
 tblT:"Targets vs. simulation results",thM:"Metric",thG:"Target",thS:"Simulation",
 r1m:"Tracking",r1g:"Aiming error under 2 mrad",r1s:"0.4–0.7 mrad",
 r2m:"LiDAR distance",r2g:"Error under 5 cm up to 10 m",r2s:"±2 cm up to 7 m",
@@ -1090,6 +1104,31 @@ var FB={form:'1FAIpQLSfq0okSbfARuXDOiozjwtePCIZGHMj-fuPRJ94EbNVzAhutOg',rating:'
   send.disabled=!ready;
   window.addEventListener('sg-lang',label);label();
 })();
+/* videos: play while on screen, pause when away; button or tap toggles */
+[].slice.call(document.querySelectorAll('figure.vid')).forEach(function(fig){
+  var v=fig.querySelector('video'),btn=fig.querySelector('.vid-btn'),box=fig.querySelector('.vid-box');
+  if(!v||!btn||!box)return;
+  var userPaused=!!RM,inView=false;
+  v.muted=true;v.defaultMuted=true;
+  function label(){btn.setAttribute('aria-label',SG.t(fig.classList.contains('playing')?'vidPause':'vidPlay'));}
+  function set(p){fig.classList.toggle('playing',p);label();}
+  function tryPlay(){var r;try{r=v.play();}catch(_){set(false);return;}if(r&&r.catch)r.catch(function(){set(false);});}
+  function toggle(){if(v.paused){userPaused=false;tryPlay();}else{userPaused=true;v.pause();}}
+  v.addEventListener('playing',function(){set(true);});
+  v.addEventListener('pause',function(){set(false);});
+  btn.addEventListener('click',function(e){e.stopPropagation();toggle();});
+  box.addEventListener('click',function(e){if(!btn.contains(e.target))toggle();});
+  if('IntersectionObserver' in window){
+    new IntersectionObserver(function(es){es.forEach(function(en){
+      inView=en.isIntersecting&&en.intersectionRatio>=.35;
+      if(inView){if(!userPaused&&v.paused)tryPlay();}else if(!v.paused)v.pause();
+    });},{threshold:[0,.35,.7]}).observe(v);
+  }else if(!userPaused){tryPlay();}
+  document.addEventListener('visibilitychange',function(){
+    if(document.hidden){if(!v.paused)v.pause();}else if(inView&&!userPaused&&v.paused)tryPlay();
+  });
+  window.addEventListener('sg-lang',label);label();
+});
 ['bDrone','bBird','bSpoof','bReset'].forEach(function(id){
   var b=document.getElementById(id);if(!b)return;
   b.addEventListener('click',function(){if(SG.demo&&SG.demo[id])SG.demo[id]();});
